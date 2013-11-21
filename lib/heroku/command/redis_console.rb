@@ -1,13 +1,13 @@
 require 'uri'
-class Heroku::Command::Redis < Heroku::Command::Base
+class Heroku::Command::Redis < Heroku::Command::BaseWithApp
 
   def cli(*queries)
-    # Must remember to extract these so they don't get passed to redis-cli
-    db = extract_option("--db") || 'REDISTOGO_URL'
-    app = extract_app
+    db_env_key = extract_option("--db") || 'REDIS_URL'
+    config_vars = api.get_config_vars(app).body
 
-    redis_url = heroku.config_vars(app)[db]
-    return puts "No such redis (#{db}), try setting --db REDIS_URL." unless redis_url
+    redis_url = config_vars[db_env_key]
+    return puts "No such redis (#{db_env_key}), try setting --db REDIS_URL." unless redis_url
+
     uri = URI.parse(redis_url)
 
     cmd = ["redis-cli"]
