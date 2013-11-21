@@ -11,7 +11,7 @@ Requirements:
 
 To install:
 
-* `heroku plugins:install https://github.com/rapportive-oss/heroku-redis-cli.git`
+* `heroku plugins:install https://github.com/Felixyz/heroku-redis-cli.git`
 
 Usage
 -----
