@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/lib/redis_console.rb'
+require 'heroku/command/redis_console'
 
 Heroku::Command::Help.group('Redis Console') do |group|
   group.command 'redis:cli [--db REDIS_URL] *args', 'Open a redis-cli shell to the database'
