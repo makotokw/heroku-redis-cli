@@ -1,11 +1,16 @@
 require 'uri'
-class Heroku::Command::Redis < Heroku::Command::BaseWithApp
+class Heroku::Command::Redis < Heroku::Command::Base
 
+  # redis:cli
+  #
+  #  Open a redis-cli shell to the database
+  #
+  # --db REDIS_URL      # specify a key of ENV to connect redis database
   def cli(*queries)
-    db_env_key = extract_option("--db") || 'REDIS_URL'
+    db_env_key = options[:db] || 'REDIS_URL'
     config_vars = api.get_config_vars(app).body
 
-    redis_url = config_vars[db_env_key]
+    redis_url = config_vars[db_env_key] || config_vars['REDISTOGO_URL'] || config_vars['REDISCLOUD_URL']
     return puts "No such redis (#{db_env_key}), try setting --db REDIS_URL." unless redis_url
 
     uri = URI.parse(redis_url)
@@ -21,6 +26,17 @@ class Heroku::Command::Redis < Heroku::Command::BaseWithApp
     exec *(cmd + args + queries)
   end
 
-  def monitor; cli 'monitor'; end
+  # redis:info
+  #
+  #  Get INFO for the redis database
+  #
+  # --db REDIS_URL      # specify a key of ENV to connect redis database
   def info; cli 'info'; end
+
+  # redis:monitor
+  #
+  #  MONITOR the redis database
+  #
+  # --db REDIS_URL      # specify a key of ENV to connect redis database
+  def monitor; cli 'monitor'; end
 end
