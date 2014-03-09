@@ -7,11 +7,13 @@ Requirements:
 
 * The heroku gem — `gem install heroku`
 
-* A local installation of redis (or at least the redis-cli utility) — `apt-get install redis-server`
+* A local installation of redis (or at least the redis-cli utility) 
+ * `apt-get install redis-server` for Debian/Ubuntu
+ * `brew install redis` for Homebrew
 
 To install:
 
-* `heroku plugins:install https://github.com/Felixyz/heroku-redis-cli.git`
+* `heroku plugins:install https://github.com/makotokw/heroku-redis-cli.git`
 
 Usage
 -----
